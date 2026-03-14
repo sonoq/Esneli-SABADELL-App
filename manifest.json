@@ -3,8 +3,8 @@
   "short_name": "Turnos",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4f46e5",
+  "background_color": "#0f172a",
+  "theme_color": "#1e293b",
   "icons": [
     {
       "src": "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='192' height='192' viewBox='0 0 192 192'><rect width='192' height='192' fill='%234f46e5' rx='40'/><text x='50%25' y='55%25' font-size='90' text-anchor='middle' dy='.3em'>🔄</text></svg>",
