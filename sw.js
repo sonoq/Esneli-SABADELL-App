@@ -5,11 +5,17 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', (event) => {
-    self.skipWaiting();
     event.waitUntil(
         caches.open(CACHE_NAME)
             .then((cache) => cache.addAll(ASSETS))
     );
+});
+
+// Listener so the web app can tell the service worker to skip waiting
+self.addEventListener('message', (event) => {
+    if (event.data === 'skipWaiting') {
+        self.skipWaiting();
+    }
 });
 
 self.addEventListener('activate', (event) => {

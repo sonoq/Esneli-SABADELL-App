@@ -139,11 +139,28 @@
         /* --- 2. PROGRESSIVE WEB APP (PWA) MAGIC --- */
         
         if ('serviceWorker' in navigator) {
-            try {
-                navigator.serviceWorker.register('./sw.js').catch(console.error);
-            } catch (error) {
-                console.error("Service worker registration failed", error);
-            }
+            navigator.serviceWorker.register('./sw.js').then(registration => {
+                // Check for updates
+                registration.addEventListener('updatefound', () => {
+                    const newWorker = registration.installing;
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            // A new version is ready!
+                            if (confirm("¡Nueva versión de la app disponible! ¿Deseas actualizar ahora?")) {
+                                newWorker.postMessage('skipWaiting');
+                            }
+                        }
+                    });
+                });
+            }).catch(console.error);
+
+            // Reload once the new worker takes over
+            let refreshing;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (refreshing) return;
+                window.location.reload();
+                refreshing = true;
+            });
         }
 
         /* --- 3. PWA INSTALL BUTTON LOGIC --- */
